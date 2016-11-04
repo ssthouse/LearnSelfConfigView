@@ -1,6 +1,9 @@
 package com.ssthouse.learnselfconfigview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -10,16 +13,28 @@ import android.view.View;
 
 public class CustomView extends View {
 
+    private int mCircleDimen;
+    private int mCircleColor;
+
+    private Paint mPaint;
+
     public CustomView(Context context) {
         this(context, null);
     }
 
     public CustomView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context, attrs);
     }
 
-    private void init() {
+    private void init(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView);
+        mCircleDimen = typedArray.getDimensionPixelSize(R.styleable.CustomView_circle_dimen, 10);
+        mCircleColor = typedArray.getColor(R.styleable.CustomView_circle_color, 0xFFFFFF);
+        typedArray.recycle();
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mCircleColor);
     }
 
     @Override
@@ -52,5 +67,13 @@ public class CustomView extends View {
                 break;
         }
         return resultSize;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int x = getWidth() / 2;
+        int y = getHeight() / 2;
+        canvas.drawCircle(x, y, mCircleDimen / 2, mPaint);
     }
 }
