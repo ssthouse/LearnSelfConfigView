@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--在自定义View中画一个圆-->
+    <declare-styleable name="CustomView" >
+        <attr name="circle_dimen" format="dimension" />
+        <attr name="circle_color" format="color" />
+    </declare-styleable>
+
+</resources>
+
