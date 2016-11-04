@@ -11,7 +11,7 @@ import android.view.View;
  * Created by ssthouse on 04/11/2016.
  */
 
-public class CustomView extends View {
+public class CustomView extends View implements View.OnClickListener {
 
     private int mCircleDimen;
     private int mCircleColor;
@@ -35,6 +35,8 @@ public class CustomView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(mCircleColor);
+
+        setOnClickListener(this);
     }
 
     @Override
@@ -75,5 +77,15 @@ public class CustomView extends View {
         int x = getWidth() / 2;
         int y = getHeight() / 2;
         canvas.drawCircle(x, y, mCircleDimen / 2, mPaint);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mCircleDimen < Math.sqrt(2) * getWidth()) {
+            mCircleDimen += 30;
+        } else {
+            mCircleDimen = 10;
+        }
+        invalidate();
     }
 }
